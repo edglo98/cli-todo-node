@@ -81,3 +81,55 @@ export const getInputTask = async(message) => {
   
   return taskInput
 }
+
+export const listOfTasksCanDelete = async( tasks = [] ) => {
+
+  const listOfTasksCanDeleteProps = [
+    {
+      type: 'list',
+      name: 'id',
+      message: 'Borrar',
+      choices: tasks.map((task, i) => ({
+        value: task.id,
+        name: `${ i + 1 } ${task.description}`
+      }))
+    }
+  ]
+
+  const { id } = await inquirer.prompt(listOfTasksCanDeleteProps)
+
+  return id
+}
+
+export const confirm = async(message= '') => {
+
+  const question = [{
+    type: 'confirm',
+    name: 'ok',
+    message
+  }]
+
+  const { ok } = await inquirer.prompt(question)
+
+  return ok 
+}
+
+export const checkListOfTasks = async( tasks = [] ) => {
+
+  const listOfTasksCanDeleteProps = [
+    {
+      type: 'checkbox',
+      name: 'ids',
+      message: 'Seleccione',
+      choices: tasks.map((task, i) => ({
+        value: task.id,
+        name: `${ i + 1 } ${task.description}`,
+        checked: Boolean(task.finallyDate)
+      }))
+    }
+  ]
+
+  const { ids } = await inquirer.prompt(listOfTasksCanDeleteProps)
+
+  return ids
+}
